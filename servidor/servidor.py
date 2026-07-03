@@ -52,16 +52,20 @@ def iniciar_servidor():
         dados = conn.recv(TAMANHO_BUFFER)
 
         if dados:
+            # conta o número total de mensagens recebidas
+            total_mensagens += 1
             mensagem = dados.decode("utf-8")
             log(f"[SERVIDOR] Mensagem recebida: '{mensagem}'")
 
             # 6. Devolver a mensagem ao cliente (eco)
-            resposta = mensagem
+            resposta = mensagem.upper()
             conn.sendall(resposta.encode("utf-8"))
             log(f"[SERVIDOR] Eco enviado: '{resposta}'")
 
         # 7. Encerrar a conexão com este cliente
         conn.close()
+        # log de número total de mensagens recebidas
+        log(f"Número total de mensagens: {total_mensagens}")
         log(f"[SERVIDOR] Conexão com {endereco_cliente} encerrada.")
 
 
